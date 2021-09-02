@@ -166,8 +166,8 @@ func LogRotate(prevLogFd *os.File, fname string) (newLogFd *os.File, err error) 
 		return nil, err
 	}
 
-	syscall.Dup2(int(newLogFd.Fd()), syscall.Stdout)
-	syscall.Dup2(int(newLogFd.Fd()), syscall.Stderr)
+	syscall.Dup3(int(newLogFd.Fd()), syscall.Stdout, 0)
+	syscall.Dup3(int(newLogFd.Fd()), syscall.Stderr, 0)
 
 	return newLogFd, nil
 }
